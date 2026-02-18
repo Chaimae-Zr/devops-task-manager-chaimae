@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-let tasks = [
-  { id: 1, title: "Initial task", completed: true },
-  { id: 2, title: "Install Git and Node.js", "completed": true },
-  { id: 2, title: "Learn DevOps basics", completed: false }
-  
+const tasks = [
+  { id: 1, title: "Learn DevOps (Modified for Lab 1)", completed: true },
+  { id: 2, title: "Practice Git Branching", completed: false },
+  { id: 3, title: "Complete Lab 1 Successfully", completed: false },
+  { id: 4, title: "Push to GitHub", completed: true }
 ];
 
 app.get('/', (req, res) => {
