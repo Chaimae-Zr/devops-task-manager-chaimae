@@ -1,15 +1,32 @@
 const express = require('express');
 const router = express.Router();
+const Task = require('../models/Task');
 
-// Tasks data
-const tasks = [
-  {id: 1, title: "Learn Git", completed: false},
-  {id: 2, title: "Practice DevOps", completed: true}
-];
+// GET /tasks
+router.get('/', async (req, res) => {
+  try {
+    const tasks = await Task.find();
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch tasks' });
+  }
+});
 
-// GET /tasks route
-router.get('/', (req, res) => {
-  res.json(tasks);
+// POST /tasks
+router.post('/', async (req, res) => {
+  try {
+    const { title, completed } = req.body;
+
+    const newTask = new Task({
+      title,
+      completed: completed ?? false
+    });
+
+    const savedTask = await newTask.save();
+    res.status(201).json(savedTask);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create task' });
+  }
 });
 
 module.exports = router;
