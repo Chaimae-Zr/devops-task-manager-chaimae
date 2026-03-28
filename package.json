@@ -2,13 +2,14 @@
   "name": "devops-task-manager",
   "version": "1.0.0",
   "main": "src/app.js",
-  "scripts": {
-    "start": "node src/app.js",
-    "test": "jest"
-  },
+ "scripts": {
+  "start": "node src/app.js",
+  "test": "NODE_ENV=test jest"
+},
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^9.3.3"
   },
   "devDependencies": {
     "jest": "^30.2.0",
