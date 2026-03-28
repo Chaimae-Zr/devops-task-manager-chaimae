@@ -6,11 +6,16 @@ app.use(express.json());
 
 const tasksRouter = require('./routes/tasks');
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/tasksdb';
+// 👇 ADD THIS
+const isTest = process.env.NODE_ENV === 'test';
 
-mongoose.connect(mongoUrl)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+if (!isTest) {
+  const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/tasksdb';
+
+  mongoose.connect(mongoUrl)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((err) => console.error('MongoDB connection error:', err));
+}
 
 app.get('/', (req, res) => {
   res.json({ message: 'Task Manager API running' });
