@@ -6,13 +6,10 @@ app.use(express.json());
 
 const tasksRouter = require('./routes/tasks');
 
-// 👇 ADD THIS
 const isTest = process.env.NODE_ENV === 'test';
 
 if (!isTest) {
-  const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/tasksdb';
-
-  mongoose.connect(mongoUrl)
+  mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/tasksdb')
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('MongoDB connection error:', err));
 }
@@ -23,8 +20,10 @@ app.get('/', (req, res) => {
 
 app.use('/tasks', tasksRouter);
 
-app.listen(3000, () => {
-  console.log('API running on port 3000');
-});
+if (require.main === module) {
+  app.listen(3000, () => {
+    console.log('API running on port 3000');
+  });
+}
 
 module.exports = app;
